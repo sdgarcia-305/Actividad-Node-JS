@@ -17,7 +17,7 @@ CREATE TABLE tareas (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   titulo VARCHAR(200) NOT NULL,
   descripcion TEXT NOT NULL,
-  estado VARCHAR(60) NOT NULL,
+  estado ENUM('pendiente', 'en progreso', 'completada') NOT NULL,
   id_creado BIGINT NOT NULL,
   id_asignado BIGINT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

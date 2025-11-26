@@ -9,19 +9,24 @@ export const login = async(req, res) => {
         const user = await verifyPassword(email, password);
         if(!user) return res.status(401).json({ message: "Verifique sus credenciales"});
 
+        const [rows] = await pool.query(
+            'SELECT rol FROM usuarios WHERE id = ?',
+            [user.id]
+        );
+        const rol = rows[0].rol;
+
         const token = jwt.sign(
-            { id: user.id, email: user.email },
+            { id: user.id, email: user.email, rol: user.rol },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES }
         );
 
-        await saveToken(user.id, token);
-
+    await saveToken(user.id, token);
         return res
         .status(200)
         .json({ 
             message: "Inicio de sesion exitoso", 
-            token: token
+            rol: rol
         });
     } catch (error) {
         return res

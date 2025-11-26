@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { getUserByRol } from '../services/user.service.js';
+import { getUserByEmail } from '../services/user.service.js';
  
 export const createUserSchema = z.object({
     nombre: z
